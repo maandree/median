@@ -73,8 +73,7 @@ for value, key in lines:
                 elif low_minus or high_minus:   prefix = '0'
                 else:                           prefix = ''
                 median = prefix + median
-            if median != last.split(' ')[2]:
-                print(median + last)
+            print(median + last)
         last, values = key, []
     values.append(value)
 
