@@ -36,43 +36,49 @@ lines.append((..., ...))
 for value, key in lines:
     if last != key:
         if last is not None:
-            values.sort(key = lambda x : float(x))
+            try:
+                values.sort(key = lambda x : float(x))
+            except:
+                values.sort()
             if len(values) % 2 == 1:
                 median = values[len(values) // 2]
             else:
                 low  = values[len(values) // 2 - 1]
                 high = values[len(values) // 2 - 0]
-                low_plus,  low_minus,  low_dot  =  (low[0] == '+'),  (low[0] == '-'), ('.' in  low)
-                high_plus, high_minus, high_dot = (high[0] == '+'), (high[0] == '-'), ('.' in high)
-                if  low_plus or  low_minus:   low =  low[1:]
-                if high_plus or high_minus:  high = high[1:]
-                if not  low_dot:  low += '.'
-                if not high_dot: high += '.'
-                lowi , lowd  = [len(x) for x in  low.split('.')]
-                highi, highd = [len(x) for x in high.split('.')]
-                if lowd < highd:   low += '0'
-                if lowd > highd:  high += '0'
-                mediani = max(lowi, highi)
-                mediand = max(lowd, highd)
-                median  = float(low)  * (-1 if  low_minus else 1)
-                median += float(high) * (-1 if high_minus else 1)
-                negative, median = median < 0, abs(median) / 2
-                if (int(low.replace('.', '')[-1]) + int(high.replace('.', '')[-1])) % 2 == 1:
-                    mediand += 1
-                if mediand == 0:
-                    median = '%%0%ii' % mediani % median
-                    if low_dot or high_dot:
-                        median += '.'
-                else:
-                    median = '%%0%i.%if' % (max(1, mediani) + mediand + 1, mediand) % median
-                    if mediani == 0:
-                        median = median[1:]
-                if   low_minus and high_minus:  prefix = '-'
-                elif negative:                  prefix = '-'
-                elif low_plus  or high_plus:    prefix = '+'
-                elif low_minus or high_minus:   prefix = '0'
-                else:                           prefix = ''
-                median = prefix + median
+                try:
+                    low_plus,  low_minus,  low_dot  =  (low[0] == '+'),  (low[0] == '-'), ('.' in  low)
+                    high_plus, high_minus, high_dot = (high[0] == '+'), (high[0] == '-'), ('.' in high)
+                    if  low_plus or  low_minus:   low =  low[1:]
+                    if high_plus or high_minus:  high = high[1:]
+                    if not  low_dot:  low += '.'
+                    if not high_dot: high += '.'
+                    lowi , lowd  = [len(x) for x in  low.split('.')]
+                    highi, highd = [len(x) for x in high.split('.')]
+                    if lowd < highd:   low += '0'
+                    if lowd > highd:  high += '0'
+                    mediani = max(lowi, highi)
+                    mediand = max(lowd, highd)
+                    median  = float(low)  * (-1 if  low_minus else 1)
+                    median += float(high) * (-1 if high_minus else 1)
+                    negative, median = median < 0, abs(median) / 2
+                    if (int(low.replace('.', '')[-1]) + int(high.replace('.', '')[-1])) % 2 == 1:
+                        mediand += 1
+                    if mediand == 0:
+                        median = '%%0%ii' % mediani % median
+                        if low_dot or high_dot:
+                            median += '.'
+                    else:
+                        median = '%%0%i.%if' % (max(1, mediani) + mediand + 1, mediand) % median
+                        if mediani == 0:
+                            median = median[1:]
+                    if   low_minus and high_minus:  prefix = '-'
+                    elif negative:                  prefix = '-'
+                    elif low_plus  or high_plus:    prefix = '+'
+                    elif low_minus or high_minus:   prefix = '0'
+                    else:                           prefix = ''
+                    median = prefix + median
+                except:
+                    median = values[len(values) // 2 - 1]
             print(median + last)
         last, values = key, []
     values.append(value)
