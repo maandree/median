@@ -11,4 +11,8 @@ __pycache__/
 *.swp
 *.pyc
 *.pyo
+*.info
+*.pdf
+*.dvi
+*.ps
 
