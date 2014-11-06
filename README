@@ -8,7 +8,7 @@ will print the result sorted by the keys.
 
 Usage example:
 
-$ cat <<EOF | ./median
+$ cat <<EOF | median
 +003  c
 .001  a
 -002  b
