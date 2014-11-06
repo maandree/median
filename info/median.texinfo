@@ -52,6 +52,7 @@ Texts. A copy of the license is included in the section entitled
 
 @menu
 * Overview::                        Brief overview of @command{median}.
+* Invoking::                        Invocation of @command{median}.
 * GNU Free Documentation License::  Copying and sharing this manual.
 @end menu
 
@@ -60,7 +61,62 @@ Texts. A copy of the license is included in the section entitled
 @node Overview
 @chapter Overview
 
-TODO
+@command{median} is command line tool for getting the median
+values of groups. For each input line it parses the first
+column, separated by a blank space, as a value and the remainder
+of the line as a key. If the line does not contain a blank
+space and entire line is parsed as a value and the key is an
+empty string. If the line however contains a blank space it is
+included in the key, thus a line contain only a value and a line
+contain a value followed by a blank space is not interpreted has
+having the same key. @command{median} outputs the median value
+for each key. In @command{median}'s current implementation the
+keys will be sorted in the output. Keys do not have to be sorted
+or groups. @command{median} will do its best to print the median
+of in the same format as the input values. The input for a group
+is of even number and is numerical the mean value of the two
+middle values is used, otherwise the lower of the two middle
+values is is used. Of course, if the number of values is odd,
+the middle value is always used and it does not matter whether
+the input is numerical or not.
+
+
+
+@node Invoking
+@chapter Invoking
+
+@command{median} is command line filter that does not take any
+arguments. See @ref{Overview} for detail about the input and
+output format.
+
+Simple example:
+@example
+$ cat <<EOF | median
+> -10
+> 2
+> 4
+> 3
+> 50
+> EOF
+3
+@end example
+
+Example with 3 groups, one non-numerical:
+@example
+$ cat <<EOF | median
+> 10 group 1
+> 20 group 1
+> 01 group 2
+> 02 group 2
+> a group 3
+> b group 3
+> c group 3
+> d group 3
+> EOF
+15 group 1
+01.5 group 2
+b group 3
+@end example
 
 
 
