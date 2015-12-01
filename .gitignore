@@ -1,11 +1,12 @@
 _/
-bin/
-obj/
+/bin/
+/obj/
 __pycache__/
 \#*\#
 .*
 !.git*
 *~
+*.new
 *.bak
 *.swo
 *.swp

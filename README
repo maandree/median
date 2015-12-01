@@ -1,22 +1,43 @@
-Calculate the median values for a set of groups.
+NAME
+	median - Calculate the median values for a set of groups
 
+SYNOPSIS
+	median < INPUT
 
-median takes the first blank space-separated column
-values and the remainder as keys. It will then print
-the median for each key. As a side effect median will
-will print the result sorted by the keys.
+DESCRIPTION
+	median takes the first blank space-separated column values
+	and the remainder as keys. It will then print the median for
+	each key. As a side effect median will print the result
+	sorted by the keys.
 
-Usage example:
+EXAMPLES
+	$ cat <<EOF | median
+	-10
+	2
+	4
+	3
+	50
+	EOF
+	3
 
-$ cat <<EOF | median
-+003  c
-.001  a
--002  b
-+001  c
--001  b
-+002  c
-EOF
-.001  a
--001.5  b
-+002  c
+	$ cat <<EOF | median
+	+003  c
+	.001  a
+	-002  b
+	+001  c
+	-001  b
+	+002  c
+	EOF
+	.001  a
+	-001.5  b
+	+002  c
+
+RATIONALE
+	Combining sort(1), sed(1), wc(1), expr(1) to do this is
+	too much work to do on a regular basis.
+
+SEE ALSO
+	sort(1), expr(1), sets(1)
+
+	Full documentation available locally via: info '(median)'
 
