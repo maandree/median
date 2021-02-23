@@ -1,0 +1,60 @@
+.TH MEDIAN 1 MEDIAN
+.SH NAME
+median - Calculate the median values for a set of groups
+.SH SYNOPSIS
+.B median
+.SH DESCRIPTION
+.B median
+takes the first blank space-separated column values and
+the remainder as keys. It will then print the median
+for each key. Lines with the same key form a group.
+.PP
+.B median
+outputs the median value for each key, no order of the
+output lines are prescribed. No order is prescribed for
+the input lines.
+.PP
+Lines without a blank space are parsed as having the empty
+string as the key, for lines with a blank space, the first
+blank space is parsed as part of the key.
+.PP
+For groups with an even number of elements, if the mean of
+the middle two values are used as the median if all values
+in the group are numerical, otherwise the lower value is
+used as the median.
+.SH EXAMPLES
+.nf
+$ cat <<EOF | median
+\-10
+2
+4
+3
+50
+EOF
+3
+.fi
+.PP
+.nf
+$ cat <<EOF | median
+\+003  c
+\&.001  a
+\-002  b
+\+001  c
+\-001  b
+\+002  c
+EOF
+\&.001  a
+\-001.5  b
+\+002  c
+.fi
+.SH RATIONALE
+Combining
+.BR sort (1),
+.BR sed (1),
+.BR wc (1),
+.BR expr (1)
+to do this is too much work to do on a regular basis.
+.SH "SEE ALSO"
+.BR sort (1),
+.BR expr (1),
+.BR sets (1)
