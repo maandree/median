@@ -6,6 +6,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#if defined(__GNUC__)
+# define PURE __attribute__((__pure__))
+#else
+# define PURE
+#endif
+
 
 struct group {
 	char *key;
@@ -24,7 +30,7 @@ static struct group groups_head;
 static struct group groups_tail;
 
 
-static int
+PURE static int
 isnumerical(const char *s)
 {
 	if (*s == '+' || *s == '-')
@@ -42,11 +48,11 @@ isnumerical(const char *s)
 }
 
 
-static int
+PURE static int
 cmp_num(const void *apv, const void *bpv)
 {
-	const char *a = *(const char **)apv;
-	const char *b = *(const char **)bpv;
+	const char *a = *(const char *const *)apv;
+	const char *b = *(const char *const *)bpv;
 	int mul = 1;
 	size_t an = 0, bn = 0, i;
 
@@ -100,8 +106,8 @@ cmp_num(const void *apv, const void *bpv)
 static int
 cmp_str(const void *apv, const void *bpv)
 {
-	const char *a = *(const char **)apv;
-	const char *b = *(const char **)bpv;
+	const char *a = *(const char *const *)apv;
+	const char *b = *(const char *const *)bpv;
 	return strcmp(a, b);
 }
 
@@ -114,7 +120,7 @@ avg(char *a, const char *b)
 	for (i = 0; a[i]; i++) {
 		val = (a[i] & 15) + (b[i] & 15);
 		carry = val & 1;
-		a[i] = (val >> 1) | '0';
+		a[i] = (char)((val >> 1) | '0');
 	}
 	return carry;
 }
@@ -128,7 +134,7 @@ subavg(char *a, const char *b)
 	for (i = 0; a[i]; i++) {
 		val = (a[i] & 15) - (b[i] & 15);
 		carry = val & 1;
-		a[i] = (val >> 1) | '0';
+		a[i] = (char)((val >> 1) | '0');
 	}
 	return carry;
 }

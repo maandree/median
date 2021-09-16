@@ -3,13 +3,14 @@
 CONFIGFILE = config.mk
 include $(CONFIGFILE)
 
+
 all: median
 
-median: median.o
-	$(CC) -o $@ median.o $(LDFLAGS)
+.o:
+	$(CC) -o $@ $< $(LDFLAGS)
 
-median.o: median.c
-	$(CC) -c -o $@ median.c $(CFLAGS) $(CPPFLAGS)
+.c.o:
+	$(CC) -c -o $@ $< $(CFLAGS) $(CPPFLAGS)
 
 check: median
 	test "$$(printf '%s\n' 1 5 2 | ./median)" = 2
@@ -36,7 +37,7 @@ uninstall:
 	-rm -f -- "$(DESTDIR)$(MANPREFIX)/man1/median.1"
 
 clean:
-	-rm -f -- median *.o
+	-rm -f -- median *.o *.su
 
 .SUFFIXES:
 .SUFFIXES: .c .o
