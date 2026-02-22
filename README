@@ -17,8 +17,8 @@ DESCRIPTION
 	string as the key, for lines with a blank space, the first
 	blank space is parsed as part of the key.
 
-	For groups with an even number of elements, if the mean of
-	the middle two values are used as the median if all values
+	For groups with an even number of elements, the mean of
+	the middle two values is used as the median if all values
 	in the group are numerical, otherwise the lower value is
 	used as the median.
 

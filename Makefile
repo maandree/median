@@ -1,4 +1,4 @@
-.PHONY:
+.POSIX:
 
 CONFIGFILE = config.mk
 include $(CONFIGFILE)
